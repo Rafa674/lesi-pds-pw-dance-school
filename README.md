@@ -1,61 +1,61 @@
-# Viva D'Arte
+# Project 50+10 - Dance School
 
-Plataforma web de apoio à gestão de uma escola de dança. Permite aos alunos e encarregados de educação consultar a agenda e pedir aulas de coaching, aos professores gerir disponibilidades e pedidos, e à administração acompanhar a actividade da escola.
+Web platform for managing a dance school. It allows students and their guardians to view the schedule and request coaching lessons, teachers to manage their availability and requests, and administrators to monitor the school's activities.
 
-## Funcionalidades
+## Features
 
-- Registo, início de sessão e recuperação de palavra-passe.
-- Gestão de utilizadores com autenticação por token JWT e permissões por perfil.
-- Consulta e gestão de horários, anos lectivos, modalidades, salas e professores.
-- Pedidos e gestão de aulas de coaching, incluindo disponibilidades dos professores.
-- Consulta de agenda, gestão de figurinos/inventário, facturação e auditoria.
-- Painel de administração.
+- Sign-up, login, and password recovery.
+- User management with JWT token authentication and role-based permissions.
+- Viewing and management of schedules, academic years, dance styles, rooms, and teachers.
+- Coaching lesson requests and management, including teacher availability.
+- Schedule viewing, costume/inventory management, billing, and auditing.
+- Administration dashboard.
 
-## Tecnologias
+## Technologies
 
-- **Frontend:** React, React Router e Vite.
-- **Backend:** Node.js, Express e JavaScript.
-- **Base de dados:** Microsoft SQL Server, acedido através do pacote `mssql`.
-- **Testes do backend:** Vitest e Supertest.
+- **Frontend:** React, React Router, and Vite.
+- **Backend:** Node.js, Express, and JavaScript.
+- **Database:** Microsoft SQL Server, accessed through the `mssql` package.
+- **Backend tests:** Vitest and Supertest.
 
-## Estrutura do projecto
+## Project structure
 
-- `frontend/` — aplicação web React.
-- `backend/` — API REST, autenticação e lógica de negócio.
-- `backend/sql/dancaF.sql` — script SQL para criar a estrutura da base de dados.
+- `frontend/` — React web application.
+- `backend/` — REST API, authentication, and business logic.
+- `backend/sql/dancaF.sql` — SQL script for creating the database schema.
 
-## Pré-requisitos
+## Prerequisites
 
-- Node.js e npm.
-- Uma instância de Microsoft SQL Server acessível.
-- Credenciais de acesso à base de dados e, se a validação CAPTCHA estiver activa, a chave secreta do reCAPTCHA.
+- Node.js and npm.
+- An accessible Microsoft SQL Server instance.
+- Database credentials and, if CAPTCHA validation is enabled, the reCAPTCHA secret key.
 
-## Configuração
+## Setup
 
-### 1. Base de dados
+### 1. Database
 
-Crie uma base de dados no SQL Server e execute nela o script `backend/sql/dancaF.sql` para criar as tabelas. Confirme que a instância e a base de dados estão acessíveis a partir do computador onde vai correr o backend.
+Create a database in SQL Server and run the `backend/sql/dancaF.sql` script against it to create the tables. Make sure the instance and database are accessible from the computer where the backend will run.
 
 ### 2. Backend
 
-Crie o ficheiro `backend/.env` com as configurações seguintes:
+Create the `backend/.env` file with the following settings:
 
 ```env
 PORT=3000
 DB_SERVER=localhost
-# Opcional, se a instância usar uma porta TCP explícita:
+# Optional, if the instance uses an explicit TCP port:
 # DB_PORT=1433
-DB_NAME=nome_da_base_de_dados
-DB_USER=utilizador
-DB_PASSWORD=palavra-passe
-JWT_SECRET=uma_chave_secreta_forte
-# Opcional, necessário para as operações que validam reCAPTCHA:
-RECAPTCHA_SECRET_KEY=chave_secreta_recaptcha
+DB_NAME=database_name
+DB_USER=username
+DB_PASSWORD=password
+JWT_SECRET=a_strong_secret_key
+# Optional, required for operations that validate reCAPTCHA:
+RECAPTCHA_SECRET_KEY=recaptcha_secret_key
 ```
 
-`DB_SERVER` também pode indicar uma instância nomeada do SQL Server, por exemplo `localhost\SQLEXPRESS`. Se definir `DB_PORT`, a ligação usa essa porta em vez do nome da instância.
+`DB_SERVER` can also specify a named SQL Server instance, for example `localhost\SQLEXPRESS`. If you set `DB_PORT`, the connection uses that port instead of the instance name.
 
-Instale as dependências e inicie o servidor:
+Install the dependencies and start the server:
 
 ```bash
 cd backend
@@ -63,13 +63,13 @@ npm install
 npm run dev
 ```
 
-O backend arranca em `http://localhost:3000`. A API só inicia depois de estabelecer ligação à base de dados. O endpoint `GET /api/health` permite verificar o estado do servidor e da ligação à base de dados.
+The backend starts at `http://localhost:3000`. The API only starts after connecting to the database. The `GET /api/health` endpoint can be used to check the status of the server and database connection.
 
-Para iniciar sem o modo de desenvolvimento, use `npm start`.
+To start without development mode, use `npm start`.
 
 ### 3. Frontend
 
-Numa segunda janela de terminal:
+In a second terminal window:
 
 ```bash
 cd frontend
@@ -77,43 +77,43 @@ npm install
 npm run dev
 ```
 
-O Vite apresenta no terminal o endereço local da aplicação. Por omissão, a API utilizada pelo frontend é `https://api-vivadarte.onrender.com`. Para apontar para o backend local, crie `frontend/.env.local` com:
+Vite displays the application's local address in the terminal. By default, the frontend uses the API at `https://api-vivadarte.onrender.com`. To point it to the local backend, create `frontend/.env.local` with:
 
 ```env
 VITE_API_URL=http://localhost:3000
 ```
 
-Reinicie o servidor Vite depois de alterar variáveis de ambiente.
+Restart the Vite server after changing environment variables.
 
-## Comandos úteis
+## Useful commands
 
-Executar a suite de testes do backend:
+Run the backend test suite:
 
 ```bash
 cd backend
 npm test
 ```
 
-Executar os testes uma vez, sem modo de observação:
+Run the tests once, without watch mode:
 
 ```bash
 npm run test:run
 ```
 
-Criar a versão de produção do frontend:
+Create a production build of the frontend:
 
 ```bash
 cd frontend
 npm run build
 ```
 
-Pré-visualizar localmente a versão compilada:
+Preview the built version locally:
 
 ```bash
 npm run preview
 ```
 
-Gerar a documentação JSDoc dos controladores, modelos e rotas do backend:
+Generate JSDoc documentation for the backend controllers, models, and routes:
 
 ```bash
 cd backend
@@ -122,14 +122,14 @@ npm run docs
 
 ## API
 
-A API está organizada sob o prefixo `/api` e inclui os módulos seguintes:
+The API is organized under the `/api` prefix and includes the following modules:
 
-- `/api/auth` — autenticação e gestão da conta.
-- `/api/escola` — estrutura e horários da escola.
-- `/api/coaching` — pedidos, aulas e disponibilidades de coaching.
-- `/api/agenda` — agenda.
-- `/api/inventario` — inventário e figurinos.
-- `/api/auditoria` — registos de auditoria.
-- `/api` — operações de facturação.
+- `/api/auth` — authentication and account management.
+- `/api/escola` — school structure and schedules.
+- `/api/coaching` — coaching requests, lessons, and availability.
+- `/api/agenda` — schedule.
+- `/api/inventario` — inventory and costumes.
+- `/api/auditoria` — audit records.
+- `/api` — billing operations.
 
-A maioria das rotas exige autenticação; algumas operações estão limitadas a perfis específicos. Consulte os ficheiros em `backend/src/routes/` para conhecer os endpoints e permissões disponíveis.
+Most routes require authentication; some operations are restricted to specific roles. See the files in `backend/src/routes/` for available endpoints and permissions.
